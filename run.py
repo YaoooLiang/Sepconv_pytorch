@@ -49,8 +49,9 @@ for strOption, strArgument in getopt.getopt(sys.argv[1:], '', [ strParameter[2:]
 ##########################################################
 
 class Network(torch.nn.Module):
-	def __init__(self):
+	def __init__(self, training=False):
 		super(Network, self).__init__()
+		self.training = training
 
 		def Basic(intInput, intOutput):
 			return torch.nn.Sequential(
@@ -125,8 +126,8 @@ class Network(torch.nn.Module):
 		self.moduleHorizontal2 = Subnet()
 
 		self.modulePad = torch.nn.ReplicationPad2d([ int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)) ])
-
-		self.load_state_dict(torch.load('./network-' + arguments_strModel + '.pytorch'))
+		if self.training:
+			self.load_state_dict(torch.load('./network-' + arguments_strModel + '.pytorch'))
 	# end
 
 	def forward(self, variableInput1, variableInput2):

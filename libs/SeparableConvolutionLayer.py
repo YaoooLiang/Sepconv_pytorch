@@ -8,6 +8,7 @@ class SeparableConvolutionLayer(Function):
     def __init__(self):
         super(SeparableConvolutionLayer, self).__init__()
 
+    @staticmethod
     def forward(ctx, input, vertical, horizontal):
         assert(input.is_contiguous())
         assert(vertical.is_contiguous())
@@ -33,10 +34,11 @@ class SeparableConvolutionLayer(Function):
         error = my_lib.SeparableConvolution_gpu_forward(input, vertical, horizontal, output)
 
         ctx.save_for_backward(input, vertical, horizontal)
-        print(error)
+        # print(error)
 
         return output
 
+    @staticmethod
     def backward(ctx, gradoutput):
 
         input, vertical, horizontal = ctx.saved_tensors
@@ -46,6 +48,7 @@ class SeparableConvolutionLayer(Function):
         gradhorizontal = torch.cuda.FloatTensor().resize_(horizontal.size()).zero_()
 
         err = my_lib.SeparableConvolution_gpu_backward(input, vertical, horizontal, gradoutput, gradinput, gradvertical, gradhorizontal)
+        # print(err)
         if err != 0:
             print(err)
 

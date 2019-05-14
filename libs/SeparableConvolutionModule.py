@@ -5,7 +5,6 @@ from .SeparableConvolutionLayer import SeparableConvolutionLayer
 class SeparableConvolutionModule(Module):
     def __init__(self):
         super(SeparableConvolutionModule, self).__init__()
-        # self.f = FilterInterpolationLayer()
 
-    def forward(self, input, vertical, horizontal):
-        return SeparableConvolutionLayer.apply(input, vertical, horizontal)
+    def forward(self, input1, vertical, horizontal):
+        return SeparableConvolutionLayer.apply(input1, vertical, horizontal)
