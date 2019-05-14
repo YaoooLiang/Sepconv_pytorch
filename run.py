@@ -126,7 +126,7 @@ class Network(torch.nn.Module):
 		self.moduleHorizontal2 = Subnet()
 
 		self.modulePad = torch.nn.ReplicationPad2d([ int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)), int(math.floor(51 / 2.0)) ])
-		if self.training:
+		if not self.training:
 			self.load_state_dict(torch.load('./network-' + arguments_strModel + '.pytorch'))
 	# end
 
